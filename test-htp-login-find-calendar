@@ -1,0 +1,24 @@
+*** Settings ***
+Documentation     Demo Selenium working for localhost
+Suite Setup       Open Browser    ${HOMEPAGE}    ${BROWSER}
+Suite Teardown    Close All Browsers
+Test Setup        Go to    ${HOMEPAGE}
+Library           Selenium2Library
+
+*** Variables ***
+${HOMEPAGE}       http://localhost/drupal-7
+${BROWSER}        firefox
+
+*** Test Cases ***
+Login to test-palvelut and very results
+    [Tags]    templated-tests
+    [Template]    Login and check results
+    mynameis       mypasswordis    Muy
+
+*** Keywords ***
+Login and check results
+    [Arguments]    ${searchkey}    ${pass}    ${result}
+    Input Text    id=edit-name    ${searchkey}
+    Input Text    id=edit-pass    ${pass}
+    Click Button    id=edit-submit
+    Wait Until Page Contains    ${result}
